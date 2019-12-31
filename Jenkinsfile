@@ -43,13 +43,13 @@ stages {
  }
  stage('Sonarqube') {
     environment {
-        scannerHome = tool 'sonarqube'
+        scannerHome = tool 'sonar'
     }
     steps {
         withSonarQubeEnv('sonarqube') {
             sh "${scannerHome}/bin/sonar-scanner"
         }
-        timeout(time: 10, unit: 'MINUTES') {
+        timeout(time: 5, unit: 'MINUTES') {
             waitForQualityGate abortPipeline: true
         }
     }
@@ -62,10 +62,10 @@ stages {
 }
 post {
         success {
-            mail to:"raknas000@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build success"
+            mail to:"jagadishrock8@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build success"
         }
         failure {
-            mail to:"raknas000@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
+            mail to:"jagadishrock8@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Build failed"
         }
     }       
 }
